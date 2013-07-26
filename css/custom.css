@@ -2,6 +2,17 @@
    Add your site-specific styles here
    ========================================================================== */
 
+@font-face {
+  font-family: 'Contrail One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Contrail One'), local('ContrailOne-Regular'), url(http://themes.googleusercontent.com/static/fonts/contrailone/v3/b41KxjgiyqX-hkggANDU6KRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
+} 
+
+html, body {
+	font-family: 'Contrail One', monospace;
+}
+
 #campaign {
 	display: block;
 	position: absolute;
