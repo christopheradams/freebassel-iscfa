@@ -40,14 +40,6 @@
 		<div id="message">
 			&nbsp;	
 		</div>
-		
-		<script>
-			var tagName = "{{site.instagram.tag}}";
-			var clientId = "{{site.instagram.client_id}}";
-			var showCaptions = {{site.instagram.captions}};
-			var limit = {{site.instagram.limit}};
-			var interval = {{site.instagram.refresh}}
-		</script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
@@ -55,6 +47,34 @@
         <script src="js/vendor/instafeed/instafeed.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+		
+		<script>
+			function fabricate() {
+				var tagName = "{{site.instagram.tag}}";
+				var hashTag = "{{site.instagram.hashTag}}";  
+
+				if (hashTag) {
+					var hash = window.location.hash.replace('#', '');
+					tagName = hash ? hash : tagName;
+				}
+
+				var options = {
+					tagName : tagName,
+					clientId : "{{site.instagram.client_id}}",
+					showCaptions : {{site.instagram.captions}},
+					limit : {{site.instagram.limit}},
+					interval : {{site.instagram.refresh}}
+				};
+
+				var fabricam = new Fabricam(options);
+				fabricam.run();
+			}
+
+			fabricate();
+
+			$(window).bind( 'hashchange', function(e) { fabricate(); });
+
+		</script>
 
 		{% if site.google_analytics %}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -67,5 +87,28 @@
             ga('create','{{site.google_analytics}}');ga('send','pageview');
         </script>
 		{% endif %}
+
+		{% if site.piwik_site_id %}
+		<!-- Piwik -->
+		<script type="text/javascript">
+			var _paq = _paq || [];
+			_paq.push(["trackPageView"]);
+			_paq.push(["enableLinkTracking"]);
+		
+			(function() {
+				var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.fabricatorz.com/";
+				_paq.push(["setTrackerUrl", u+"piwik.php"]);
+				_paq.push(["setSiteId", "{{site.piwik_site_id}}"]);
+				var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+				g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+			})();
+		</script>
+		<!-- Piwik Image Tracker -->
+		<noscript>
+			<img src="https://analytics.fabricatorz.com/piwik.php?idsite={{site.piwik_site_id}}&amp;rec=1" style="border:0" alt="" />
+		</noscript>
+		<!-- End Piwik -->
+		{% endif %}
+
     </body>
 </html>

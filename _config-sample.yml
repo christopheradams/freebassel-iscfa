@@ -1,6 +1,6 @@
 title: "SITE TITLE"
 tagline: "TAGLINE"
-exclude: README.md, LICENSE.md
+exclude: [README.md, LICENSE.md]
 
 description: "DESCRIPTION"
 keywords: ['website', 'camera']
@@ -15,3 +15,4 @@ instagram:
   captions: true
   limit: '15'
   refresh: '60000'
+  hashTag: false
