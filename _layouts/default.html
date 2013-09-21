@@ -34,6 +34,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <script src="js/vendor/instafeed/instafeed.min.js"></script>
 	
 		{{ content }}
 
@@ -44,35 +45,38 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/vendor/vegas/jquery.vegas.js"></script>
-        <script src="js/vendor/instafeed/instafeed.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 		
 		<script>
-			function fabricate() {
-				var tagName = "{{site.instagram.tag}}";
-				var hashTag = "{{site.instagram.hashTag}}";  
+			backgrounds = [
+  { src: '/img/4670781482_d072301ef0_z.jpg' } //1
+  , { src: '/img/8559700000_a7ce734718.jpg' } //2
+  , { src: '/img/8569213945_bfa32e87d5_z.jpg' } //3
+  , { src: '/img/Syria.png' } //4
+  , { src: '/img/Syria.png' } //5
+  , { src: '/img/5114101621_49f2dc813b_z.jpg' } //6
+  , { src: '/img/freebassel-org.png' } //7
+, { src: '/img/2829609654_29c542c67a_o.jpg' } //8
+			];
+			captions = [
+  'Bassel Khartabli, 31歲、巴勒斯坦裔的敘利亞人，是一位備受尊重的電腦工程師。他所專擅的領域為網路所奠基的開放原始碼軟體(open source software)開發。他在十年前展開了其於敘利亞的事業。' //1
+  , '在那之後，Bassel 即因其對於開放性網絡的堅實付出、傳授他人關於科技知識、及免費提供他的經驗以幫助世界等而享有盛名。' //2
+  , 'Creative Commons / Wikipedia / Mozilla / Openclipart' //3
+  , '敘利亞' //4
+  , '受到阿拉伯之春的影響，敘利亞反對派於2011年1月26日開始，組織民眾暴力示威，要求敘利亞政府實行政治改革、恢復公民權利，以及結束自1963年以來實行的國家緊急狀態。' //5
+  , '2012年三月15日, Bassel Khartabil 在大馬士革的Mazzeh區的一陣逮捕浪潮中被拘禁了。' //6
+  , 'http://freebassel.org' //7
+  , 'Christopher Adams, christopher@fabricatorz.com' //8
+			];
+			var options = {
+				backgrounds: backgrounds,
+				captions: captions,
+				showCaptions: true
+			};
 
-				if (hashTag) {
-					var hash = window.location.hash.replace('#', '');
-					tagName = hash ? hash : tagName;
-				}
-
-				var options = {
-					tagName : tagName,
-					clientId : "{{site.instagram.client_id}}",
-					showCaptions : {{site.instagram.captions}},
-					limit : {{site.instagram.limit}},
-					interval : {{site.instagram.refresh}}
-				};
-
-				var fabricam = new Fabricam(options);
-				fabricam.run();
-			}
-
-			fabricate();
-
-			$(window).bind( 'hashchange', function(e) { fabricate(); });
+			var bassel = new Bassel(options);
+			bassel.run();
 
 		</script>
 

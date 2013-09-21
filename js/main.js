@@ -1,79 +1,55 @@
 (function() {
-	var Fabricam, root;
+	var Bassel, root;
 
-	Fabricam = (function() {
+	Bassel = (function() {
 
-		function Fabricam(params) {
+		function Bassel(params) {
 			this.options = params;
 		}
 
-		Fabricam.prototype.run = function() {
+		Bassel.prototype.run = function() {
 
-			var tagName = this.options.tagName;
-			var clientId = this.options.clientId;
-			var limit = this.options.limit;
+			var backgrounds = this.options.backgrounds;
+			var captions = this.options.captions;
 			var showCaptions = this.options.showCaptions;
-			var interval = this.options.interval;
 
-			var feed = new Instafeed({
-				get: 'tagged',
-				tagName: tagName,
-				clientId: clientId,
-				mock: true,
-				limit: limit,
-				success: function(feed) {
-					var data = feed.data;
-		
-					var backgrounds = [];
-					var captions = [];
+		  $.vegas('slideshow', {
+			backgrounds: backgrounds,
+			walk: function(step) {
+				if (showCaptions) {
+					var html = "<div class='caption'>" + captions[step] + "</div>";	
+					$('#message').html(html);
+				}
+			}
+		  });
+		  $.vegas('overlay', {
+			src:'js/vendor/vegas/overlays/01.png'
+		  });
 
-					for (var i = 0; i < data.length; i++) {
-						var instagram = data[i];
-						backgrounds.push({ src: instagram.images.standard_resolution.url });
-						var link = instagram.link
-						var caption = instagram.caption;
-						if (caption) {
-							var text = caption.text;
-						} else {
-							var text = "#" + tagName;
-						}
+		  $.vegas('pause');
 
-						var user = instagram.user;
-						var username = user.username;
+$(document).keydown(function(e) {
+    switch(e.which) {
+        case 37: $.vegas('previous'); // left
+        break;
 
-						captions.push("<a href='" + link + "'>@" + username + "</a> " + text);
-					}
+        case 39: $.vegas('next'); // right
+        break;
 
-				  $.vegas('slideshow', {
-				  	backgrounds: backgrounds,
-					walk: function(step) {
-						if (showCaptions) {
-							var html = "<div class='caption'>" + captions[step] + "</div>";	
-							$('#message').html(html);
-						}
-					}
-				  });
-				  $.vegas('overlay', {
-					src:'js/vendor/vegas/overlays/01.png'
-				  });
-				},	
-			});
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
 
-			feed.run();
-
-			setInterval(function() {
-				feed.run()
-			}, interval);
-		
-			return true;
+		return true;
 
 		};
 		
-		return Fabricam;
+		return Bassel;
 	})();
 
 	root = typeof exports !== "undefined" && exports !== null ? exports : window;
 
-	root.Fabricam = Fabricam;
+	root.Bassel = Bassel;
 
 }).call(this);
